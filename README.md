@@ -104,7 +104,7 @@ The repository must contain a `README.md` file with step-by-step instructions on
 - Fork and clone this repository so you can version your changes;
 - Run `yarn` to install dependencies;
 - Run `yarn start` to start the Expo development server;
-- Scan the QR code with Expo Go or press `i` / `a` to open the app in a simulator.
+- Scan the QR code with Expo Go or press `i` / `a` to open the app in a simulator or `w` to open the app in the browser.
 
 > This repository already contains a pre-configured base Expo app (with TypeScript and Expo Router set up), so you can focus on building the features described above instead of project setup.
 
