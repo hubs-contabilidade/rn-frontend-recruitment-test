@@ -39,3 +39,11 @@ export interface CharactersVars {
 export interface CharacterVars {
   id: string
 }
+
+export interface CharactersByIdsData {
+  charactersByIds: Character[]
+}
+
+export interface CharactersByIdsVars {
+  ids: string[]
+}
