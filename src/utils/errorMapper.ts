@@ -27,7 +27,6 @@ const fallback = {
 } as const;
 
 export function mapErrorMessage(
-  message: string,
   statusCode?: number | null,
 ): { message: string; hint: string } {
   if (statusCode && statusCode in statusMatchers) {
