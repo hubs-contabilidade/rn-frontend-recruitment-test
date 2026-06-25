@@ -1,19 +1,24 @@
-import { Text, View } from "react-native";
-import { mapErrorMessage } from "../../utils/errorMapper";
-import { theme } from "../../theme/colors";
+import { Text, View, TouchableOpacity } from "react-native";
 import { styles } from "./styles";
+import { mapErrorMessage } from "../../utils/errorMapper";
 
 interface ErrorFooterProps {
   statusCode?: number | null;
+  onRetry?: () => void;
 }
 
-export default function ErrorFooter({ statusCode }: ErrorFooterProps) {
-  const { message, hint } = mapErrorMessage(statusCode);
+export default function ErrorFooter({ statusCode, onRetry }: ErrorFooterProps) {
+  const mapped = mapErrorMessage(statusCode);
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.message, { color: theme.text.subdued }]}>{message}</Text>
-      <Text style={[styles.hint, { color: theme.text.subdued }]}>{hint}</Text>
+      <Text style={styles.message}>{mapped.message}</Text>
+      <Text style={styles.hint}>{mapped.hint}</Text>
+      {onRetry && (
+        <TouchableOpacity style={styles.button} onPress={onRetry}>
+          <Text style={styles.buttonText}>Try again</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }

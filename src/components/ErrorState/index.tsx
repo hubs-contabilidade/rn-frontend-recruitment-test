@@ -3,11 +3,13 @@ import { styles } from "./styles";
 import { mapErrorMessage } from "../../utils/errorMapper";
 
 interface ErrorStateProps {
+  message?: string;
   statusCode?: number | null;
   onRetry?: () => void;
 }
 
 export default function ErrorState({
+  message = "Something went wrong",
   statusCode,
   onRetry,
 }: ErrorStateProps) {

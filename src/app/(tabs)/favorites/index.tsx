@@ -1,6 +1,8 @@
+import { useMemo } from "react";
 import { useRouter } from "expo-router";
 import { FlatList, Text, View } from "react-native";
 import CharacterCard from "../../../components/CharacterCard";
+import ErrorFooter from "../../../components/ErrorFooter";
 import ErrorState from "../../../components/ErrorState";
 import LoadingFooter from "../../../components/LoadingFooter";
 import LoadingState from "../../../components/LoadingState";
@@ -13,7 +15,13 @@ export default function FavoritesScreen() {
   const { characters, ids, loading, error, statusCode, refetch } = useFavoritesController();
   const toggle = useFavoritesStore((s) => s.toggle);
 
-  if (error) return <ErrorState statusCode={statusCode} onRetry={refetch} />;
+  const listFooter = useMemo(() => {
+    if (loading) return <LoadingFooter />;
+    if (error && characters.length > 0) return <ErrorFooter statusCode={statusCode} onRetry={refetch} />;
+    return null;
+  }, [loading, error, characters.length, statusCode, refetch]);
+
+  if (error && !characters.length) return <ErrorState statusCode={statusCode} onRetry={refetch} />;
 
   if (loading && !characters.length) return <LoadingState />;
 
@@ -42,7 +50,7 @@ export default function FavoritesScreen() {
       columnWrapperStyle={{ gap: 8 }}
       style={styles.listContainer}
       contentContainerStyle={styles.list}
-      ListFooterComponent={loading ? <LoadingFooter /> : null}
+      ListFooterComponent={listFooter}
     />
   );
 }
