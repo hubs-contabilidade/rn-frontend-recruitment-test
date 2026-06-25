@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { ApolloError } from "@apollo/client";
 import { useRouter } from "expo-router";
 import { useCharacters } from "../../../hooks/useCharacters";
+import { extractStatusCode } from "../../../utils/error";
 import type { CharactersFilter } from "../../../types/character";
 
 export type StatusFilter = "All" | "Alive" | "Dead" | "unknown";
@@ -17,8 +18,11 @@ export function useCharactersController() {
     ...(status !== "All" ? { status } : {}),
   };
 
-  const { data, loading, error, statusCode, networkStatus, fetchMore, refetch } =
+  const { data, loading, error: apolloError, networkStatus, fetchMore, refetch } =
     useCharacters(1, filter);
+
+  const error = apolloError ?? undefined;
+  const statusCode = extractStatusCode(apolloError);
 
   const characters = data?.characters.results ?? [];
   const info = data?.characters.info;
