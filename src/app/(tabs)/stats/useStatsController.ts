@@ -32,6 +32,7 @@ export function useStatsController() {
     return {
       totalCharacters: info.count,
       totalPages: info.pages,
+      sampleSize: results.length,
       statusCount,
       topSpecies: sortedSpecies,
     };
