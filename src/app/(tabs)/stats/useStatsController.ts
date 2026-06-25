@@ -1,8 +1,12 @@
 import { useMemo } from "react";
 import { useCharacters } from "../../../hooks/useCharacters";
+import { extractStatusCode } from "../../../utils/error";
 
 export function useStatsController() {
-  const { data, loading, error, statusCode, refetch } = useCharacters(1);
+  const { data, loading, error: apolloError, refetch } = useCharacters(1);
+
+  const error = apolloError ?? undefined;
+  const statusCode = extractStatusCode(apolloError);
 
   const stats = useMemo(() => {
     if (!data?.characters) return null;

@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
@@ -19,6 +20,6 @@ export const useFavoritesStore = create<FavoritesState>()(
         })),
       has: (id) => get().ids.includes(id),
     }),
-    { name: "favorites-storage", storage: createJSONStorage(() => localStorage) },
+    { name: "favorites-storage", storage: createJSONStorage(() => AsyncStorage) },
   ),
 );
